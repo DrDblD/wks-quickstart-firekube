@@ -154,7 +154,7 @@ jk generate -f config.yaml -f "${status}" setup.js
 rm -f "${status}"
 
 log "Updating container images and git parameters"
-wksctl init --git-url="$(git_http_url "$(git_remote_fetchurl "${git_remote}")")" --git-branch="$(git_current_branch)"
+wksctl -v init --git-url="$(git_http_url "$(git_remote_fetchurl "${git_remote}")")" --git-branch="$(git_current_branch)"
 
 log "Pushing initial cluster configuration"
 git add config.yaml footloose.yaml machines.yaml flux.yaml wks-controller.yaml
@@ -168,5 +168,5 @@ apply_args=(
   "--git-branch=$(git_current_branch)"
 )
 [ "${git_deploy_key}" ] && apply_args+=("${git_deploy_key}")
-wksctl apply "${apply_args[@]}"
-wksctl kubeconfig
+wksctl -v apply "${apply_args[@]}"
+wksctl -v kubeconfig
